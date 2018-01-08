@@ -3,11 +3,7 @@ MAINTAINER daiaguirre <dayanna_979@hotmail.com>
 
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-RUN apt-get update
-RUN apt-get install -y mongodb-org
-RUN service mongod start
-RUN apt-get install -y nodejs
-RUN apt-get install npm git git-core -y
+RUN apt-get update && apt-get install -y mongodb-org && service mongod start && apt-get install -y nodejs && apt-get install npm git git-core -y
 RUN mkdir /home/app
 ADD app /home/app
 ADD test /home/test
