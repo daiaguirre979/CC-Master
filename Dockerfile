@@ -12,6 +12,3 @@ RUN cd apache
 RUN echo "<h1>Prueba de funcionamiento contenedor docker</h1>">index.html
 
 EXPOSE 80
-ADD ["index.html","/var/www/html/"]
-
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
