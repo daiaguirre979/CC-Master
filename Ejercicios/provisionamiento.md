@@ -68,7 +68,64 @@ Confirmar su instalación
 
 ## Ejercicio 4 -Provisionar una máquina virtual en algún entorno con los que trabajemos habitualmente usando Salt.
 
+1.- Instalando Salt
+>
+>> sudo apt-get install python-software-properties
+>> sudo add-apt-repository ppa:saltstack/salt
+>> sudo apt-get update
+>> sudo apt-get install salt-minion
+>> sudo apt-get install salt-master
+
+2.- Modificamos el archivo de configuración indicandole la ip a utilizar
+>
+>> vim /etc/salt/minion
+
+3.- Reiniciamos el servicio 
+>
+>> service salt-minion restart
+
+4.- Asignamos una clave
+>
+>> salt-key -a '$pass'
+
+5.- Instalamos nginx
+>
+>> salt '$pass' pkg.install nginx
+![Con titulo](https://raw.githubusercontent.com/daiaguirre979/CC-Master/master/salr.PNG "automatizacion")
+
+## Ejercicio 5 y 6 - Desplegar los fuentes de una aplicación cualquiera, propia o libre, que se encuentre en un servidor git público en la máquina virtual Azure (o una máquina virtual local) usando ansible.
+
+1. Actualizar la versión 
+* sudo apt-get 
+
+2. Instalar paquetes necesarios.
+
+>
+>>   * sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+>>
+
+3. Instalar Azure Cli 
+
+>
+>>   * curl -L https://aka.ms/InstallAzureCli | bash
+>>   * exec -l %SHELL
+>>   * az --version
+
+4. Conectarse a Azure Cli
+
+>
+>>   * az login
+>>
+
+5. Ejecutar el script acopio.sh, para crear maquina virtual desde Azure-Cli y a su vez utilizar el provisionamiento, para nuestro proyecto.
+
+>
+>>   * sh acopio.sh
+>>
+![Con titulo](https://raw.githubusercontent.com/daiaguirre979/CC-Master/master/automatizacion.png "automatizacion")
 
 
-## Ejercicio 5 - Desplegar los fuentes de una aplicación cualquiera, propia o libre, que se encuentre en un servidor git público en la máquina virtual Azure (o una máquina virtual local) usando ansible.
-## Ejercicio 6 - Desplegar la aplicación que se haya usado anteriormente con todos los módulos necesarios usando un playbook de Ansible.
+
+
+
+
