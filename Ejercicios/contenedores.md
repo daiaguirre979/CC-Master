@@ -185,4 +185,14 @@ echo  "la suma total es: $SUMA"
 
 
 
+## Ejercicio 9 - Usar un miniframework REST para crear un servicio web y introducirlo en un contenedor, y componerlo con un cliente REST que sea el que finalmente se ejecuta y sirve como “frontend”.
+
+1. Instalar docker-compose
+
+>
+>> sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+
+
+
 
