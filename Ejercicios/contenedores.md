@@ -193,6 +193,116 @@ echo  "la suma total es: $SUMA"
 >> sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 
 
+contenedor, y componerlo con un cliente REST que sea el que finalmente se ejecuta y sirve como “frontend”.
+
+Para su instalación se requiere instalar
+
+>
+>> * apt-get install -y python-pip
+>> * pip install flask
+>> * pip install SQLAlchemy
+>> * pip install  Flask-SQLAlchemy
+
+Adiccional creamos es servicio web servico.py
+
+~~~
+from flask import Flask, jsonify
+from flask_sqlalchemy import SQLAlchemy
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/productos.db'
+db = SQLAlchemy(app)
+lass Productos(db.Model):
+   id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(96), unique=True)
+   descripcion = db.Column(db.String(200), unique=True)
+   valor = db.Column(db.String(20),unique=True)
+@app.route("/")
+def server_info():
+return jsonify({"server": "Api Rest - Productos"})
+ @app.route("/status/")
+def server_status():return jsonify({"status": "OK" })
+@app.route("/productos/", endpoint="nueva_productos", methods=["POST"])
+def new_producto():
+   from flask import request
+   json = request.get_json()   
+   name = json.get("name")
+    descripcion = json.get("descripcion")
+    valor = json.get("valor")
+    new_prod = Productos()
+   new_prod.name = name
+    new_prod.descripcion = descripcion
+    new_prod.valor = valor
+    db.session.add(new_prod)
+   db.session.commit()
+ return jsonify({"id": new_prod.id}), 201
+@app.route("/lista/", endpoint="lista_productos", methods=["GET"])
+def lista_productos():
+pruebas = Productos.query.order_by(Productos.id).all()
+return jsonify({"productos": [{"id": x.id, "name": x.name, "descripcion": x.descripcion, "valor": x.valor} for x in pruebas] })
+ if __name__ == "__main__":
+ db.create_all() app.run(port=5000, host="0.0.0.0")
+~~~
+
+Ejecutamos el servcio web
+
+>
+>> * FLASK_APP=service.py flask run
+>> * curl -XGET -H "Content-type: application/json" 'http://0.0.0.0:3000/lista/'
+>> * curl -XPOST -H "Content-type: application/json" \    -d '{"name":"PARACETAMOL", "descripcion": "Analgesico", "valor":"$5"}' \     'http://0.0.0.0:3000/productos/'
+
+![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/dockerR6.PNG "docker")
+![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/servicio.PNG "docker")
+
+
+
+----- faltaa docker-compose
+
+## Ejercicio 10 - Reproducir los contenedores creados anteriormente usando un Dockerfile.
+
+
+Utilizando el servicio web del ejercicio anterior creamos un dockerfile.
+
+~~~
+
+FROM ubuntu:14.04
+MAINTAINER Dayana <dayanna Aguirre>
+WORKDIR /tmp
+RUN apt-get update -y
+RUN apt-get install -y python-pip
+RUN pip install Flask
+RUN pip install SQLAlchemy
+RUN pip install Flask-SQLAlchemy
+ENTRYPOINT ["python"]
+CMD ["server.py"]
+
+~~~
+
+![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/servicio1.PNG "docker")
+
+![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/servicio2.PNG "docker")
+
+## Ejercico 11 - Crear con docker-machine una máquina virtual local que permita desplegar contenedores y ejecutar en él contenedores creados con antelación.
+
+Pasos
+
+1. Descargamos docker machine
+~~~
+curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
+chmod +x /tmp/docker-machine && \
+sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
+~~~
+
+2. Verificamos su instalación
+
+>
+>> * docker-machine version
+
+3. Creamos la maquina
+
+>
+>> * sudo docker-machine create --driver=virtualbox machine
+
+![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/machine.PNG "docker")
 
 
 
