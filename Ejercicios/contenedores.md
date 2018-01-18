@@ -243,6 +243,17 @@ return jsonify({"productos": [{"id": x.id, "name": x.name, "descripcion": x.desc
  db.create_all() app.run(port=5000, host="0.0.0.0")
 ~~~
 
+Creamos el archivo Docker-compose.yml
+
+~~~
+version:'1'
+services:
+  web:
+    build: .
+    ports:
+        - "5000:5000"
+ ~~~
+
 Ejecutamos el servcio web
 
 >
@@ -252,7 +263,6 @@ Ejecutamos el servcio web
 
 ![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/dockerR6.PNG "docker")
 ![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/servicio.PNG "docker")
-
 
 
 ----- faltaa docker-compose
