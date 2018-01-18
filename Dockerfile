@@ -1,14 +1,18 @@
-FROM ubuntu
-MAINTAINER Dayana Aguirre Iñiguez "daiaguirrei@correo.ugr.es"
+FROM ubuntu:14.04
+MAINTAINER Dayana <dayanna Aguirre>
 
-RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
+RUN apt-get update -y
+RUN apt-get install -y python-pip
+RUN pip install Flask
+RUN pip install SQLAlchemy
+RUN pip install Flask-SQLAlchemy
 
-RUN mkdir apache
-RUN cd apache
-RUN echo "<h1>Prueba de funcionamiento contenedor docker</h1>">index.html
+WORKDIR /tmp
 
-EXPOSE 80
+COPY servicio.py /tmp
+
+EXPOSE  5000
+
+ENTRYPOINT ["python"]
+CMD ["servicio.py"]
