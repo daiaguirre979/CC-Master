@@ -44,4 +44,3 @@ Ejecutamos
 
 ![Con titulo](https://github.com/daiaguirre979/CC-Master/raw/master/debianPR.PNG "ngnix")
 
-## Ejercicio 3 - Conseguir una cuenta de prueba en OpenStack y crear una instancia a la que se pueda acceder, provisionándola con algún script disponible.
